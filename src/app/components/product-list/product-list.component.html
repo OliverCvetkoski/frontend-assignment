@@ -1,0 +1,66 @@
+<div *ngIf="loading" class="loading">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="error">Error</div>
+
+<div class="inputs">
+  <form (ngSubmit)="filterResults()">
+    <input
+      type="text"
+      id="search"
+      name="search"
+      [(ngModel)]="searchTerm"
+      placeholder="Search"
+      required
+    />
+    <button type="submit">Search</button>
+  </form>
+  <div class="sort">
+    <label for="sort">Sort By:</label>
+    <select id="sort" (change)="sortProducts($event)">
+      <option value="">-- Select sorting order --</option>
+      <option value="ascending">Sort by ascending name</option>
+      <option value="descending">Sort by descending name</option>
+    </select>
+  </div>
+</div>
+
+<div class="container">
+  <a
+    *ngFor="let product of products"
+    class="card"
+    [routerLink]="['/products', product.id, product.slug]"
+  >
+    <div class="image">
+      <h2 class="name">{{ product.name }}</h2>
+      <img
+        [src]="product.featuredAsset.preview"
+        alt="{{ product.name }}"
+        *ngIf="product.featuredAsset !== null; else fillerImage"
+      />
+      <ng-template #fillerImage>
+        <div class="fillerImage">
+          <h4>{{ product.name }}</h4>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="variants">
+      <div *ngFor="let items of product.variants" class="variantsBg">
+        <h4>{{ items.name }}</h4>
+        <p>Price: {{ items.price }} $</p>
+        <p>
+          <ng-container
+            *ngIf="items.stockLevel === 'IN_STOCK'; else outOfStock"
+          >
+            <p class="inStock">In stock &#10004;</p>
+          </ng-container>
+          <ng-template #outOfStock>
+            <p class="noStock">Not in stock &#10008;</p>
+          </ng-template>
+        </p>
+      </div>
+    </div>
+  </a>
+</div>

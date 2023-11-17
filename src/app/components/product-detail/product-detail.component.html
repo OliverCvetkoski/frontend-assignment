@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="card">
+    <div class="image">
+      <h2>{{ product.name }}</h2>
+      <img
+        *ngIf="product.featuredAsset"
+        [src]="product.featuredAsset.preview"
+        alt="{{ product.name }}"
+      />
+    </div>
+    <div class="content">
+      <div class="description">
+        <p>{{ product.description }}</p>
+      </div>
+      <div class="inputs">
+        <div class="price">
+          <div>
+            <label for="prices">Select Variant:</label>
+          </div>
+          <select id="prices" name="prices" [(ngModel)]="selectedPriceId">
+            <option *ngFor="let price of product.variants" [value]="price.id">
+              {{ price.name }} {{ price.price }} $
+            </option>
+          </select>
+        </div>
+        <div class="quantity">
+          <label for="quantity">Select Quantity:</label>
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            max="99"
+            min="1"
+            pattern="[0-9]+"
+            [(ngModel)]="quantityValue"
+          />
+        </div>
+        <button (click)="addItemToCart()" class="addToCartBtn">
+          Add to cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

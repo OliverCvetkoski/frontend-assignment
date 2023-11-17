@@ -1,0 +1,124 @@
+.menu-toggle-checkbox {
+  display: none;
+}
+
+.menu-toggle-label {
+  display: none;
+}
+
+header {
+  height: 5em;
+  width: 100%;
+  background-color: #190482;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  color: white;
+  font-weight: 700;
+  margin: 0 0 0 1em;
+}
+
+.menu-icon {
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bar {
+  width: 30px;
+  height: 4px;
+  background-color: black;
+  transition: 0.4s;
+}
+
+.menu {
+  transition: 0.4s;
+}
+
+.menu ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0 2em 0 0;
+}
+
+.menu li {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.menu a {
+  padding: 10px 15px 10px 15px;
+  border-radius: 10px;
+  background-color: #2f0cdf;
+  color: white;
+  font-weight: 700;
+}
+
+.menu a:hover {
+  box-shadow: 0px 0px 10px 6px #c2d9ff;
+  color: black;
+}
+
+/* Media query to show the hamburger menu on screens smaller than 768px */
+@media (max-width: 768px) {
+  .menu {
+    background-color: #11025f;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: none;
+    width: 60%;
+    height: 100vh;
+  }
+
+  .menu ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 6em;
+    width: 100%;
+  }
+  .menu li {
+    padding-top: 10px;
+  }
+
+  .menu a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu-toggle-label {
+    display: block;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .menu-toggle-checkbox:checked + .menu-toggle-label .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-toggle-checkbox:checked + .menu-toggle-label .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle-checkbox:checked + .menu-toggle-label .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .menu-toggle-checkbox:checked ~ .menu {
+    display: flex;
+  }
+}
