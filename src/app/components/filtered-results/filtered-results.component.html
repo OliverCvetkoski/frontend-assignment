@@ -1,0 +1,21 @@
+<a
+  [routerLink]="['/products', product.productAsset.id, product.slug]"
+  class="card"
+>
+  <div class="image">
+    <h2 class="name">{{ product.productName }}</h2>
+    <img
+      [src]="product.productAsset.preview"
+      alt="{{ product.productName }}"
+      *ngIf="product.productAsset !== null; else fillerImage"
+    />
+    <ng-template #fillerImage>
+      <div class="fillerImage">
+        <h4>{{ product.productName }}</h4>
+      </div>
+    </ng-template>
+  </div>
+  <div class="price">
+    <p>Price: {{ product.priceWithTax.min }} $</p>
+  </div>
+</a>

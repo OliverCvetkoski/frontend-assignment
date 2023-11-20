@@ -4,6 +4,33 @@
   margin-top: 2em;
 }
 
+.filteredResults {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  flex-wrap: wrap;
+  padding-bottom: 4em;
+}
+
+button,
+input,
+select {
+  border-radius: 10px;
+}
+
+.filterByCollection {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  padding: 1em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filterByCollection p {
+  font-weight: 700;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -25,9 +52,6 @@ a {
   display: flex;
 }
 
-.content {
-  padding: 1em;
-}
 .image {
   flex: 1;
   padding: 1em;
@@ -138,6 +162,7 @@ select {
 
   .inputs {
     display: block;
+    padding: 0;
   }
 
   .image {
@@ -167,7 +192,7 @@ select {
 
   .loading {
     position: absolute;
-    margin-top: 9em;
+    margin-top: 16em;
     left: 50%;
   }
 }

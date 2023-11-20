@@ -1,0 +1,12 @@
+.notification {
+  padding: 25px;
+  border-radius: 5px;
+  font-weight: 700;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+}

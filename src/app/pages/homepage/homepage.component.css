@@ -2,3 +2,19 @@ div {
   display: flex;
   justify-content: center;
 }
+
+.btn {
+  padding: 2em;
+}
+
+button {
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: 0 0 10px 5px black;
+}

@@ -1,11 +1,9 @@
 <div *ngIf="loading" class="loading">
   <app-loading-spinner></app-loading-spinner>
 </div>
-
 <div *ngIf="error">Error</div>
-
 <div class="inputs">
-  <form (ngSubmit)="filterResults()">
+  <form (ngSubmit)="searchProducts()">
     <input
       type="text"
       id="search"
@@ -20,13 +18,29 @@
     <label for="sort">Sort By:</label>
     <select id="sort" (change)="sortProducts($event)">
       <option value="">-- Select sorting order --</option>
-      <option value="ascending">Sort by ascending name</option>
-      <option value="descending">Sort by descending name</option>
+      <option value="ASC">Sort by ascending name</option>
+      <option value="DESC">Sort by descending name</option>
     </select>
   </div>
 </div>
+<div class="filterByCollection">
+  <p>Filter:</p>
+  <button (click)="filterByCollection('electronics')">Electronics</button>
+  <button (click)="filterByCollection('home-garden')">Home & Garden</button>
+  <button (click)="filterByCollection('sports-outdoor')">
+    Sports & Outdoor
+  </button>
+</div>
 
-<div class="container">
+<div *ngIf="isFiltered">
+  <app-filtered-results
+    class="filteredResults"
+    *ngFor="let product of filteredProducts"
+    [product]="product"
+  ></app-filtered-results>
+</div>
+
+<div class="container" *ngIf="!isFiltered">
   <a
     *ngFor="let product of products"
     class="card"
@@ -45,7 +59,6 @@
         </div>
       </ng-template>
     </div>
-
     <div class="variants">
       <div *ngFor="let items of product.variants" class="variantsBg">
         <h4>{{ items.name }}</h4>

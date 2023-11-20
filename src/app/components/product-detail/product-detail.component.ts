@@ -26,10 +26,12 @@ interface Product {
   styleUrls: ['./product-detail.component.css'],
 })
 export class ProductDetailComponent implements OnInit {
-  selectedPriceId: number = 1;
+  selectedPriceId: number | null = null;
   product: Product = {} as Product;
   loading = false;
   quantityValue: number = 1;
+  productsInLocalStorage: any[] = [];
+  showNotification = false;
 
   constructor(private route: ActivatedRoute, private apollo: Apollo) {}
 
@@ -43,11 +45,18 @@ export class ProductDetailComponent implements OnInit {
       .valueChanges.subscribe((result: any) => {
         this.product = result.data.product;
         this.loading = !this.loading;
-        console.log(result);
       });
+
+    const storedProducts = localStorage.getItem('products');
+    this.productsInLocalStorage =
+      storedProducts !== null ? JSON.parse(storedProducts) : [];
   }
 
   addItemToCart() {
+    if (!this.selectedPriceId) {
+      return;
+    }
+
     this.apollo
       .mutate({
         mutation: ADD_ITEM_TO_ORDER,
@@ -57,7 +66,45 @@ export class ProductDetailComponent implements OnInit {
         },
       })
       .subscribe((result: any) => {
-        console.log(result);
+        const { lines, totalQuantity } = result.data.addItemToOrder;
+        const { sku, price } = lines[0].productVariant;
+        const image = lines[0].featuredAsset.preview;
+        const name = lines[0].productVariant.name;
+
+        const newProduct = {
+          sku,
+          image,
+          name,
+          quantity: totalQuantity,
+          price: price * totalQuantity,
+          originalPrice: price,
+        };
+
+        if (this.productsInLocalStorage) {
+          const existingProductIndex = this.productsInLocalStorage.findIndex(
+            (product: any) => product.sku === sku
+          );
+
+          if (existingProductIndex !== -1) {
+            this.productsInLocalStorage[existingProductIndex].quantity +=
+              this.quantityValue;
+            this.productsInLocalStorage[existingProductIndex].price +=
+              price * this.quantityValue;
+          } else {
+            this.productsInLocalStorage.push(newProduct);
+          }
+        } else {
+          this.productsInLocalStorage = [newProduct];
+        }
+
+        localStorage.setItem(
+          'products',
+          JSON.stringify(this.productsInLocalStorage)
+        );
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 2000);
       });
   }
 }

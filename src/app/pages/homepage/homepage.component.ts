@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
 })
-export class HomepageComponent {}
+export class HomepageComponent {
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}

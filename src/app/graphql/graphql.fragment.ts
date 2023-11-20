@@ -25,6 +25,7 @@ const ACTIVE_ORDER_FRAGMENT = gql`
         id
         name
         sku
+        price
       }
       featuredAsset {
         id

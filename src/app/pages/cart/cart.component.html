@@ -1,0 +1,39 @@
+<div class="notification">
+  <app-notification
+    [show]="showNotification"
+    [content]="'Removed from cart'"
+    [backgroundColor]="'#ff0000'"
+  ></app-notification>
+</div>
+
+<div class="container">
+  <div *ngIf="productsInLocalStorage.length === 0" class="noResults">
+    <h2>Your cart is empty.</h2>
+    <div class="browseProducts"><a routerLink="/">Browse products</a></div>
+  </div>
+  <div *ngFor="let product of productsInLocalStorage" class="card">
+    <div class="content">
+      <div class="name">
+        <p>{{ product.name }}</p>
+      </div>
+      <div class="image">
+        <img [src]="product.image" alt="{{ product.name }}" />
+      </div>
+    </div>
+    <div class="quantity">
+      <p>Quantity: {{ product.quantity }}</p>
+      <p>Add more:</p>
+      <input type="number" min="1" max="99" [(ngModel)]="product.quantity" />
+      <button (click)="updateQuantity(product, product.quantity)">
+        Update cart
+      </button>
+    </div>
+    <div class="price">
+      <p>Price: {{ product.price }} $</p>
+      <button (click)="deleteProduct(product)">Remove from cart</button>
+    </div>
+  </div>
+</div>
+<div class="checkout" *ngIf="productsInLocalStorage.length !== 0">
+  <button>Checkout</button>
+</div>
