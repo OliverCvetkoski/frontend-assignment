@@ -28,13 +28,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   filterByCollection(slug: string) {
     this.loading = true;
+    this.searchTerm = '';
     this.productService.getCollectionProducts(slug).subscribe((result: any) => {
       this.filteredProducts = result.data.search.items;
       this.collection = result.data.collection.name;
       this.isFiltered = true;
       this.loading = false;
     });
-    this.updateUrlParams({ collection: slug });
+    this.updateUrlParams({ collection: slug, search: null });
   }
 
   sortProducts(e: any) {
@@ -61,7 +62,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
           this.products = result.data.products.items;
           this.loading = false;
         });
-      this.updateUrlParams({ search: this.searchTerm });
+      this.updateUrlParams({ search: this.searchTerm, collection: null });
     }
   }
 
